@@ -88,7 +88,8 @@ O escopo funcional do sistema consiste nos seguintes casos de uso:
 
 ### Atores
 
-| `Ator` | `Responsabilidade`      |
+| `Ator`          | `Responsabilidade`                                                                                                                                          |
+                |
 
 ## 5 - Features
 
@@ -111,3 +112,7 @@ O escopo funcional do sistema consiste nos seguintes casos de uso:
 
  5. **USER**
     - GET - {{host}}/users/logged
+
+## 6 - Casos de uso (detalhamento)
+
+   //fazer projeto
