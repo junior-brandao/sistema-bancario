@@ -1,4 +1,4 @@
-# API Sistema E-Comerce
+# API Sistema Bancário
 
 ###### E-mail: <edilson_brandaojunior@hotmail.com>
 
@@ -6,12 +6,14 @@
 
  Projeto de estudo de criação de api, onde uso as seguinte tecnologias:
 
-[![Java](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=black)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-[![Apache Maven](https://img.shields.io/badge/apache_maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
-[![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
-[![Intellij](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/pt-br/idea//)
+![node](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+[![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://maven.apache.org/)
+[![express](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)](https://spring.io/projects/spring-boot)
+[![vscode](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)](https://www.jetbrains.com/pt-br/idea//)
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)](https://www.postman.com/)
-[![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
+[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()
+[![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juniorbrandao/)
 
 #### Linguagens
 
@@ -84,27 +86,30 @@ no sistema (client, admin).
 
 O escopo funcional do sistema consiste nos seguintes casos de uso:
 
-| Caso de uso                                         | Visão geral                                                                                              | Acesso             |
-|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------|--------------------|
-| Manter produtos                                     | CRUD de produtos, podendo filtrar itens pelo nome                                                        | Somente Admin      |
-| Manter categorias                                   | CRUD de categorias, podendo filtrar itens pelo nome                                                      | Somente Admin      |
-| Manter usuários                                     | CRUD de usuários, podendo filtrar itens pelo nome                                                        | Somente Admin      |
-| Gerenciar carrinho                                  | Incluir e remover itens do carrinho de compras, bem  como alterar as quantidades do produto em cada item | Público            |
-| Consultar catálogo                                  | Listar produtos disponíveis, podendo filtrar produtos pelo nome                                          | Público            |
-| Sign up                                             | Cadastrar-se no sistema                                                                                  | Público            |
-| Login                                               | Efetuar login no sistema                                                                                 | Público            |
-| Registrar pedido                                    | Salvar no sistema um pedido a partir dos dados do carrinho de compras informado                          | Usuário logado     |
-| Visualizar pedidos                                  | Visualizar os pedidos que o próprio usuário já fez                                                       | Usuário logado     |
-| Registrar pagamento                                 | Salvar no sistema os dados do pagamento de um pedido                                                     | Somente Admin      |
-| Reportar pedidos                                    | Relatório de pedidos, podendo ser filtrados por data                                                     | Somente Admin      |
-| Atualizar perfil                                    | Atualizar o próprio cadastro                                                                             | Usuário logado     |
+| `Caso de uso`  | `Visão geral` | `Acesso` |
+|----------------|---------------|----------|
+| Manter produtos  | CRUD de produtos, podendo filtrar itens pelo nome   |Somente Admin |
+| Manter categorias| CRUD de categorias, podendo filtrar itens pelo nome | Somente Admin |
+| Manter usuários  | CRUD de usuários, podendo filtrar itens pelo nome   | Somente Admin      |
+| Gerenciar carrinho | Incluir e remover itens do carrinho de compras, bem  como alterar as quantidades do produto em cada item | Público            |
+| Consultar catálogo | Listar produtos disponíveis, podendo filtrar produtos pelo nome   | Público |
+| Sign up          | Cadastrar-se no sistema        | Público            |
+| Login            | Efetuar login no sistema       | Público            |
+| Registrar pedido | Salvar no sistema um pedido a partir dos dados do carrinho de compras informado                       | Usuário logado     |
+| Visualizar pedidos | Visualizar os pedidos que o próprio usuário já fez| Usuário logado     |
+| Registrar pagamento| Salvar no sistema os dados do pagamento de um pedido | Somente Admin |
+| Reportar pedidos | Relatório de pedidos, podendo ser filtrados por data | Somente Admin      |
+| Atualizar perfil  | Atualizar o próprio cadastro   | Usuário logado     |
 
 ![image](https://github.com/junior-brandao/e-commerce/assets/140202509/2ed5d20d-f271-4c28-83fc-6047ec321a5d)
 
 ### Atores
 
-| `Ator`          | `Responsabilidade`                                                                                                                                          |
-|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Ator`          | `Responsabilidade`|
+|-----------------|-------------------|
+| Usuário anônimo | Pode realizar casos de uso das áreas públicas do sistema, como catálogo, carrinho de compras, login e sign up|
+| Cliente         | Responsável por manter seu próprios dados pessoais no sistema,e pode visualizar histórico dos seus pedidos. Todo usuário cadastrado por padrão é um Cliente |
+| Admin           | Responsável por acessar a área administrativa do sistema com cadastros e relatórios. Admin também pode fazer tudo que Cliente faz|
 
 ## 5 - Features
 
