@@ -1,0 +1,286 @@
+{
+  "info": {
+    "_postman_id": "b612368d-c628-4740-9431-08b3a33717b1",
+    "name": "modulo 2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "21174084",
+    "_collection_link": "https://planetary-sunset-590341.postman.co/workspace/Cubos-Academy~080f7943-cf01-4287-8571-cc1bb0ba0ab4/collection/21174084-b612368d-c628-4740-9431-08b3a33717b1?action=share&source=collection_link&creator=21174084"
+  },
+  "item": [
+    {
+      "name": "desafio II- Conta bancária",
+      "item": [
+        {
+          "name": "conta",
+          "item": [
+            {
+              "name": "nova conta",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n     \r\n        \"usuario\": {\r\n            \"nome\": \"junior brandão\",\r\n            \"cpf\": \"13221220\",\r\n            \"data_nascimento\": \"2021-03-15\",\r\n            \"telefone\": \"71999998888\",\r\n            \"email\": \"junior@bar.com\",\r\n            \"senha\": \"1234\"\r\n        }\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/contas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "excluir conta",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n        \"usuario\": {\r\n            \"nome\": \"Keylla brandão\",\r\n            \"cpf\": \"11111111111\",\r\n            \"data_nascimento\": \"1978-03-02\",\r\n            \"telefone\": \"22222222222\",\r\n            \"email\": \"keylla@bar.com\",\r\n            \"senha\": \"55555\"\r\n        }\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/contas/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "listar contas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/contas/?senha_banco=Cubos123Bank",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "senha_banco",
+                      "value": "Cubos123Bank"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "saldo",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/contas/saldo?numero_conta=1&senha=1234",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas",
+                    "saldo"
+                  ],
+                  "query": [
+                    {
+                      "key": "numero_conta",
+                      "value": "1"
+                    },
+                    {
+                      "key": "senha",
+                      "value": "1234"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "extrato",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/contas/extrato?numero_conta=1&senha=1234",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas",
+                    "extrato"
+                  ],
+                  "query": [
+                    {
+                      "key": "numero_conta",
+                      "value": "1"
+                    },
+                    {
+                      "key": "senha",
+                      "value": "1234"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "atualizar conta",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n        \"usuario\": {\r\n           \"nome\": \"Edilson brandão\",\r\n        \r\n            \"data_nascimento\": \"2021-03-15\",\r\n            \"telefone\": \"71999998888\",\r\n        \r\n            \"senha\": \"1234\"\r\n        }\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/contas/1/usuario",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "contas",
+                    "1",
+                    "usuario"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "transacoes",
+          "item": [
+            {
+              "name": "depositar",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"numero_conta\":1,\r\n    \"valor\":100\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/transacoes/depositar",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "transacoes",
+                    "depositar"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "sacar",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"numero_conta\":1,\r\n    \"valor\":100,\r\n    \"senha\":\"1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/transacoes/sacar",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "transacoes",
+                    "sacar"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "transferir",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n \"numero_conta_origem\": 1,\r\n \"numero_conta_destino\": 2,\r\n \"valor\": 900,\r\n \"senha\": \"1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/transacoes/transferir",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "transacoes",
+                    "transferir"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
