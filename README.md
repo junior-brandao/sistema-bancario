@@ -22,21 +22,30 @@
 ## Testes e Documentação
 
    Através do Postman, crie as requisiçoes http para as rotas existentes.
-   Obs: Você pode importar o script em: src/scripts/contaBancaria.json
+   Obs: Você pode importar o script em: **`src/scripts/contaBancaria.json`**
 
 ## 1 - Visão geral do sistema
   
    O sistema deve criar uma API para um Sistema de Banco Digital.Será construida uma  RESTful API que permita:
 
-- Criar conta bancária
-- Listar contas bancárias
-- Atualizar os dados do usuário da conta bancária
-- Excluir uma conta bancária
-- Depósitar em uma conta bancária
-- Sacar de uma conta bancária
-- Transferir valores entre contas bancárias
-- Consultar saldo da conta bancária
-- Emitir extrato bancário
+- `Criar` conta bancária
+  - Esse endpoint deverá criar uma conta bancária
+- `Listar` contas bancárias
+  - Esse endpoint deverá lista todas as contas bancárias existentes.
+- `Atualizar` os dados do usuário da conta bancária
+  - Esse endpoint deverá atualizar uma conta existente
+- `Excluir` uma conta bancária
+  - Esse endpoint deve excluir uma conta bancária existente.
+- `Depósitar` em uma conta bancária
+  - Esse endpoint deverá somar o valor do depósito ao saldo de uma conta válida e registrar essa transação.
+- `Sacar` de uma conta bancária
+  - Esse endpoint deverá realizar o saque de um valor em uma determinada conta bancária e registrar essa transação.
+- `Transferir` valores entre contas bancárias
+  - Esse endpoint deverá permitir a transferência de recursos (dinheiro) de uma conta bancária para outra e registrar essa transação.
+- `Consultar` saldo da conta bancária
+  - Esse endpoint deverá retornar o saldo de uma conta bancária.
+- `Emitir` extrato bancário
+  - Esse endpoint deverá listar as transações realizadas de uma conta específica.
 
 ### Persistências dos dados
 
@@ -115,7 +124,11 @@ A collection **`Conta Bancária`** será encontrada em:
 
 ![Alt text]( src/assets/imagens/image-4.png)
 
-## 4 - Autor
+## 6 - Estrutura de Arquivos
+
+![Alt text](src/assets/imagens/image.png)
+
+## 5 - Autor
 
 #### E-mail: <edilson_brandaojunior@hotmail.com>
 
