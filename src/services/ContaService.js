@@ -136,6 +136,7 @@ const extrato = (req, resp) => {
 
 const validarConta = (arrayContas, req, resp) => {
 
+  const { numeroConta } = req.params
   const { usuario } = req.body
   if (usuario.nome === '' || !usuario.nome) {
     resp.status(400).json({ "mensagem": "Campo nome é obrigatório" })
@@ -172,8 +173,10 @@ const validarConta = (arrayContas, req, resp) => {
     resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
     return false
   }
+
   const seCpfEmail = arrayContas.find((field) => {
-    return (field.usuario.cpf === usuario.cpf || field.usuario.email === usuario.email)
+    return field.usuario.cpf === usuario.cpf && field.numero !== Number(numeroConta)
+      || field.usuario.email === usuario.email && field.numero !== Number(numeroConta)
   })
   if (seCpfEmail) {
     resp.status(400).json({ "mensagem": "Já existe uma conta com o cpf ou e-mail informado!" })
@@ -191,5 +194,6 @@ const verificarSeContaExixte = (numero_conta) => {
   }
   return conta
 }
+
 
 module.exports = { listar, criar, atualizar, excluir, saldo, extrato }
