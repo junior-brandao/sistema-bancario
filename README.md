@@ -14,22 +14,21 @@
 
 ### Configurações para inicialização
 
-       - Você pode optar por clonar o projeto utilizando de git clone, no acesso github.com/junior-brandao/sistema-bancario.
-       - Utilize o VS CODE para abri-lo.
-       - Através do comando > npm install, baixe e instale as dependências do projeto.
-       - Após executar sua aplicação através do comando > npm run dev, a api estará rodando em http://localhost:3000. 
+- Você pode optar por clonar o projeto utilizando de git clone, no acesso github.com/junior-brandao/sistema-bancario.
+- Utilize o VS CODE para abri-lo.
+- Através do comando > npm install, baixe e instale as dependências do projeto.
+- Após executar sua aplicação através do comando > npm run dev, a api estará rodando em <http://localhost:3000>.
 
 ## Testes e Documentação
 
-       Através do Postman, crie as requisiçoes http para as rotas existentes.
-       Obs: Você pode importar o script em: src/scripts/contaBancaria.json
+   Através do Postman, crie as requisiçoes http para as rotas existentes.
+   Obs: Você pode importar o script em: src/scripts/contaBancaria.json
 
 ## 1 - Visão geral do sistema
   
    O sistema deve criar uma API para um Sistema de Banco Digital.Será construida uma  RESTful API que permita:
 
 - Criar conta bancária
-
 - Listar contas bancárias
 - Atualizar os dados do usuário da conta bancária
 - Excluir uma conta bancária
@@ -80,7 +79,7 @@
 
 - #### `DELETE` {host}/contas/:numeroConta
 
-1. **TRANSAÇÔES**
+1. **TRANSAÇÕES**
 
 - #### `POST` {host}/transacoes/depositar
 
