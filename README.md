@@ -1,6 +1,6 @@
 # API Sistema Bancário
 
- Projeto de estudo para criação de api RESTful, onde utilizo das seguinte tecnologias:
+ Projeto para criação de API para um Banco Digital, onde utilizo das seguinte tecnologias e ferramentas:
 
 [![node](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en)
 [![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
@@ -8,16 +8,14 @@
 [![vscode](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)](https://code.visualstudio.com/)
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)](https://www.postman.com/)
 [![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
-
 [![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()
-[![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juniorbrandao/)
 
 ### Configurações para inicialização
 
-- Você pode optar por clonar o projeto utilizando de git clone, no acesso github.com/junior-brandao/sistema-bancario.
+- Você deve clonar o projeto utilizando de `git clone`, no acesso `github.com/junior-brandao/sistema-bancario` .
 - Utilize o VS CODE para abri-lo.
-- Através do comando > npm install, baixe e instale as dependências do projeto.
-- Após executar sua aplicação através do comando > npm run dev, a api estará rodando em <http://localhost:3000>.
+- Através do comando > `npm install`, baixe e instale as dependências do projeto.
+- Após executar sua aplicação através do comando >`npm run dev`, a api estará rodando em <http://localhost:3000>.
 
 ## Testes e Documentação
 
@@ -26,7 +24,7 @@
 
 ## 1 - Visão geral do sistema
   
-   O sistema deve criar uma API para um Sistema de Banco Digital.Será construida uma  RESTful API que permita:
+   O sistema deve criar uma API para um Sistema de Banco Digital. Será construida uma  RESTful API que permita:
 
 - `Criar` conta bancária
   - Esse endpoint deverá criar uma conta bancária
@@ -77,6 +75,9 @@
 ```
 
 ## 2 - Endpoints  
+
+ Host:
+ > **<http://localhost:3000/>**
 
 1. **CONTAS**
 
@@ -132,4 +133,4 @@ A collection **`Conta Bancária`** será encontrada em:
 
 #### E-mail: <edilson_brandaojunior@hotmail.com>
 
-#### Linkedin: <https://www.linkedin.com/in/juniorbrandao/>
+[![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juniorbrandao/)
