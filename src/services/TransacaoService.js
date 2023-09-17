@@ -5,9 +5,8 @@ const depositar = (req, resp) => {
   const { numero_conta, valor } = req.body
 
   try {
-    if (!validarConta(req, resp)) return
-    let conta = verificarSeContaExixte(numero_conta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
+    let conta = getConta(resp, numero_conta)
+    if (!conta) return
     const deposito = { data: new Date(), numero_conta, valor }
     depositos.push(deposito)
     conta.saldo += valor
@@ -19,15 +18,10 @@ const depositar = (req, resp) => {
 
 const sacar = (req, resp) => {
 
-  const { senha, numero_conta, valor } = req.body
+  const { numero_conta, valor } = req.body
   try {
-
-    if (!validarConta(req, resp)) return
-    let conta = verificarSeContaExixte(numero_conta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
-    if (senha !== conta.usuario.senha) {
-      return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
-    }
+    let conta = getConta(resp, numero_conta)
+    if (!conta) return
     if (conta.saldo < valor) return resp.status(401).json({ "mensagem": "Saldo insuficiente!" })
     const saque = { data: new Date(), numero_conta, valor }
     saques.push(saque)
@@ -41,13 +35,10 @@ const sacar = (req, resp) => {
 const transferir = (req, resp) => {
 
   const { senha, numero_conta_origem, numero_conta_destino, valor } = req.body
-
   try {
-    if (!validarContaTransferencia(req, resp)) return
-    const contaOrigem = verificarSeContaExixte(numero_conta_origem)
-    const contaDestino = verificarSeContaExixte(numero_conta_destino)
-    if (!contaOrigem) return resp.status(404).json({ "message": "Conta não encontrada" })
-    if (!contaDestino) return resp.status(404).json({ "message": "Conta destino não encontrada" })
+    const contaOrigem = getConta(resp, numero_conta_origem)
+    const contaDestino = getConta(resp, numero_conta_destino)
+    if (contaOrigem === contaDestino) return resp.status(404).json({ "message": "Conta destino não pode ser igual a conta origem" })
     if (senha !== contaOrigem.usuario.senha) {
       return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
     }
@@ -62,73 +53,90 @@ const transferir = (req, resp) => {
   }
 }
 
-const verificarSeContaExixte = (numero_conta) => {
+const getConta = (resp, numero_conta) => {
+
+  if (isNaN(numero_conta)) return resp.status(400).json({ "message": "Número de conta inválido" })
   const conta = contas.find((conta) => {
     return conta.numero === Number(numero_conta)
   })
   if (!conta) {
+    resp.status(404).json({ "message": "Conta não encontrada" })
     return false
   }
   return conta
 }
 
-const validarConta = (req, resp) => {
+const validarDados = (req, resp, next) => {
 
   const { numero_conta, valor } = req.body
-
   if (numero_conta === '' || !numero_conta) {
-    resp.status(400).json({ "mensagem": "Número de conta é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Número de conta é obrigatório" })
   }
   if (valor === '' || !valor) {
-    resp.status(400).json({ "mensagem": "Valor é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Valor é obrigatório" })
   }
   if (isNaN(numero_conta)) {
-    resp.status(400).json({ "message": "Número de conta inválido" })
-    return false
+    return resp.status(400).json({ "message": "Número de conta inválido" })
   }
   if (valor <= 0) {
-    resp.status(400).json({ "mensagem": "Valor deve ser maior que 0" })
-    return false
+    return resp.status(400).json({ "mensagem": "Valor deve ser maior que 0" })
   }
   if (isNaN(valor)) {
-    resp.status(400).json({ "message": "Valor inválido" })
-    return false
+    return resp.status(400).json({ "message": "Valor inválido" })
   }
-  return true
+  return next()
 }
 
-
-const validarContaTransferencia = (req, resp) => {
+const validarDadosTransferencia = (req, resp, next) => {
 
   const { numero_conta_origem, numero_conta_destino, valor } = req.body
-
   if (numero_conta_origem === '' || !numero_conta_origem) {
-    resp.status(400).json({ "mensagem": "Número de conta origem é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Número de conta origem é obrigatório" })
   }
   if (numero_conta_destino === '' || !numero_conta_destino) {
-    resp.status(400).json({ "mensagem": "Número de conta do destinatário é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Número de conta do destinatário é obrigatório" })
   }
   if (valor === '' || !valor) {
-    resp.status(400).json({ "mensagem": "Valor é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Valor é obrigatório" })
   }
   if (valor <= 0) {
-    resp.status(400).json({ "mensagem": "Valor deve ser maior que 0" })
-    return false
+    return resp.status(400).json({ "mensagem": "Valor deve ser maior que 0" })
   }
   if (isNaN(numero_conta_origem)) {
-    resp.status(400).json({ "message": "Número de conta inválido" })
-    return false
+    return resp.status(400).json({ "message": "Número de conta inválido" })
   }
   if (isNaN(valor)) {
-    resp.status(400).json({ "message": "Valor inválido" })
-    return false
+    return resp.status(400).json({ "message": "Valor inválido" })
   }
-  return true
+  return next()
 }
 
-module.exports = { depositar, sacar, transferir }
+const loginConta = (req, resp, next) => {
+
+  const { numero_conta, senha } = req.body
+  if (senha === '' || !senha) {
+    return resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
+  }
+  if (numero_conta === '' || !numero_conta) {
+    return resp.status(400).json({ "mensagem": "Campo número de conta é obrigatório" })
+  }
+  const conta = contas.find((conta) => {
+    return conta.numero === Number(numero_conta)
+  })
+  if (!conta) {
+    return resp.status(404).json({ "message": "Conta não encontrada" })
+  }
+  if (senha !== conta.usuario.senha) {
+    return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
+  }
+  return next()
+}
+
+module.exports = {
+  depositar,
+  sacar,
+  transferir,
+  validarDados,
+  loginConta,
+  validarDadosTransferencia
+}

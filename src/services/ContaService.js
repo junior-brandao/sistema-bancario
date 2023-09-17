@@ -17,10 +17,8 @@ const criar = (req, resp) => {
 
   const { nome, cpf, data_nascimento, telefone, email, senha } = req.body.usuario
   let numero = 0
-
   contas.length === 0 ? numero = 1 : numero = contas[contas.length - 1].numero + 1
   try {
-    if (!validarConta(contas, req, resp)) return
     const conta = {
       numero,
       saldo: 0,
@@ -35,13 +33,11 @@ const criar = (req, resp) => {
 
 const atualizar = (req, resp) => {
 
-  const { numeroConta } = req.params
   const { nome, cpf, data_nascimento, telefone, email, senha } = req.body.usuario
   try {
-    if (isNaN(numeroConta)) return resp.status(400).json({ "message": "Número de conta inválido" })
-    if (!validarConta(contas, req, resp)) return
-    let conta = verificarSeContaExixte(numeroConta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
+
+    let conta = getConta(req, resp)
+    if (!conta) return
     conta.usuario.nome = nome
     conta.usuario.data_nascimento = data_nascimento
     conta.usuario.telefone = telefone
@@ -58,11 +54,9 @@ const excluir = (req, resp) => {
 
   const { numeroConta } = req.params
   try {
-    if (isNaN(numeroConta)) {
-      return resp.status(400).json({ "message": "Número de conta inválido" })
-    }
-    let conta = verificarSeContaExixte(numeroConta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
+
+    let conta = getConta(req, resp)
+    if (!conta) return
     if (conta.saldo != 0) return resp.status(400).json({ "message": "A conta só pode ser removida se o saldo for zero!" })
     contas = contas.filter((conta) => {
       return conta.numero !== Number(numeroConta)
@@ -76,24 +70,11 @@ const excluir = (req, resp) => {
 
 const saldo = (req, resp) => {
 
-  const { numero_conta, senha } = req.query
+  const { numero_conta } = req.query
   try {
-    if (senha === '' || !senha) {
-      resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
-      return false
-    }
-    if (numero_conta === '' || !numero_conta) {
-      resp.status(400).json({ "mensagem": "Campo número de conta é obrigatório" })
-      return false
-    }
-    if (isNaN(numero_conta)) {
-      return resp.status(400).json({ "message": "Número de conta inválido" })
-    }
-    let conta = verificarSeContaExixte(numero_conta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
-    if (senha !== conta.usuario.senha) {
-      return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
-    }
+    const conta = contas.find((conta) => {
+      return conta.numero === Number(numero_conta)
+    })
     return resp.status(200).json({ "saldo": `${conta.saldo}` })
   } catch (error) {
     return resp.status(500).json({ "erro": error.message })
@@ -102,14 +83,8 @@ const saldo = (req, resp) => {
 
 const extrato = (req, resp) => {
 
-  const { numero_conta, senha } = req.query
+  const { numero_conta } = req.query
   try {
-    if (senha === '' || !senha) return resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
-    if (numero_conta === '' || !numero_conta) return resp.status(400).json({ "mensagem": "Campo número de conta é obrigatório" })
-    if (isNaN(numero_conta)) return resp.status(400).json({ "message": "Número de conta inválido" })
-    let conta = verificarSeContaExixte(numero_conta)
-    if (!conta) return resp.status(404).json({ "message": "Conta não encontrada" })
-    if (senha !== conta.usuario.senha) return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
     const deposito = depositos.filter((conta) => {
       return (conta.numero_conta === Number(numero_conta))
     })
@@ -134,66 +109,90 @@ const extrato = (req, resp) => {
   }
 }
 
-const validarConta = (arrayContas, req, resp) => {
+const validarDados = (req, resp, next) => {
 
   const { numeroConta } = req.params
   const { usuario } = req.body
+
   if (usuario.nome === '' || !usuario.nome) {
-    resp.status(400).json({ "mensagem": "Campo nome é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo nome é obrigatório" })
   }
   if (usuario.data_nascimento === '' || !usuario.data_nascimento) {
-    resp.status(400).json({ "mensagem": "Campo data de nascimento é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo data de nascimento é obrigatório" })
   }
   if (usuario.telefone === '' || !usuario.telefone) {
-    resp.status(400).json({ "mensagem": "Campo telefone é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo telefone é obrigatório" })
   }
   if (req.method !== "PUT") {
     if (!usuario.cpf) {
-      resp.status(400).json({ "mensagem": "Campo Cpf é obrigatório" })
-      return false
+      return resp.status(400).json({ "mensagem": "Campo Cpf é obrigatório" })
     }
     if (!usuario.email) {
-      resp.status(400).json({ "mensagem": "Campo e-mail é obrigatório" })
-      return false
+      return resp.status(400).json({ "mensagem": "Campo e-mail é obrigatório" })
     }
   }
   if (usuario.cpf === '') {
-    resp.status(400).json({ "mensagem": "Campo Cpf é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo Cpf é obrigatório" })
   }
   if (usuario.email === '') {
-    resp.status(400).json({ "mensagem": "Campo e-mail é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo e-mail é obrigatório" })
   }
-
   if (usuario.senha === '' || !usuario.senha) {
-    resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
-    return false
+    return resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
   }
-
-  const seCpfEmail = arrayContas.find((field) => {
+  const seCpfEmail = contas.find((field) => {
     return field.usuario.cpf === usuario.cpf && field.numero !== Number(numeroConta)
       || field.usuario.email === usuario.email && field.numero !== Number(numeroConta)
   })
   if (seCpfEmail) {
-    resp.status(400).json({ "mensagem": "Já existe uma conta com o cpf ou e-mail informado!" })
-    return false
+    return resp.status(400).json({ "mensagem": "Já existe uma conta com o cpf ou e-mail informado!" })
   }
-  return true
+  return next()
 }
 
-const verificarSeContaExixte = (numero_conta) => {
+const getConta = (req, resp) => {
+
+  const numero_conta = req.params.numeroConta
+  if (isNaN(numero_conta)) return resp.status(400).json({ "message": "Número de conta inválido" })
   const conta = contas.find((conta) => {
     return conta.numero === Number(numero_conta)
   })
   if (!conta) {
+    resp.status(404).json({ "message": "Conta não encontrada" })
     return false
   }
   return conta
 }
 
+const loginConta = (req, resp, next) => {
 
-module.exports = { listar, criar, atualizar, excluir, saldo, extrato }
+  const { numero_conta, senha } = req.query
+  if (senha === '' || !senha) {
+    return resp.status(400).json({ "mensagem": "Campo Senha é obrigatório" })
+  }
+  if (numero_conta === '' || !numero_conta) {
+    return resp.status(400).json({ "mensagem": "Campo número de conta é obrigatório" })
+  }
+  const conta = contas.find((conta) => {
+    return conta.numero === Number(numero_conta)
+  })
+  if (!conta) {
+    return resp.status(404).json({ "message": "Conta não encontrada" })
+  }
+  if (senha !== conta.usuario.senha) {
+    return resp.status(401).json({ "mensagem": "A senha do banco informada é inválida!" })
+  }
+  return next()
+}
+
+module.exports =
+{
+  listar,
+  criar,
+  atualizar,
+  excluir,
+  saldo,
+  extrato,
+  validarDados,
+  loginConta
+}
